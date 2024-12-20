@@ -4,3 +4,6 @@ uvicorn main:app --reload
 Ativar: venv/Scripts/activate
 Criar: python -m venv venv
 https://dontpad.com/2024_2_PDSI2
+
+
+1. Conectar com o banco usando .env
