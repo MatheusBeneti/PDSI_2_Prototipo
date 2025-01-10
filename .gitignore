@@ -1,0 +1,11 @@
+# Excluir arquivos de cache do Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Excluir ambiente virtual
+venv/
+.env/
+
+# Excluir arquivos de variáveis de ambiente
+.env

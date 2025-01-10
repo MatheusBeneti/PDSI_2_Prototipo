@@ -20,11 +20,11 @@ services:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: adminpassword
     ports:
-      - "8080:80"  # Expondo a porta do pgAdmin
+      - "8080:80"  
     networks:
       - mynetwork
     depends_on:
-      - db  # Garantir que o pgAdmin só suba após o PostgreSQL
+      - db  
 
 networks:
   mynetwork:
