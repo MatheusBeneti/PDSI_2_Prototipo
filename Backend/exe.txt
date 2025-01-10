@@ -3,6 +3,7 @@ pip freeze > requirements.txt
 uvicorn main:app --reload
 Ativar: venv/Scripts/activate
 Criar: python -m venv venv
+deactivate
 https://dontpad.com/2024_2_PDSI2
 pip install -r requirements.txt
 
