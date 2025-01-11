@@ -1,21 +1,6 @@
 from fastapi import FastAPI
 from fastapi.params import Body
 from pydantic import BaseModel
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
-
-secret_key = os.getenv("SECRET_KEY")
-database_url = os.getenv("DATABASE_URL")
-debug_mode = os.getenv("DEBUG")
-
-
-print("Secret Key:", secret_key)
-print("Database URL:", database_url)
-print("Debug Mode:", debug_mode)
-
-
 import classes
 
 app = FastAPI()
