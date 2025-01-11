@@ -4,8 +4,10 @@ __pycache__/
 *.pyo
 
 # Excluir ambiente virtual
-venv/
+Backend/venv/
+Backend/venv
 .env/
 
 # Excluir arquivos de variáveis de ambiente
 .env
+venv
