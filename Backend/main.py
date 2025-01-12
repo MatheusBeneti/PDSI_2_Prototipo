@@ -4,8 +4,9 @@ from classes import Mensagem
 import model
 from database import engine
 
-app = FastAPI()
+model.Base.metadata.create_all(bind=engine)
 
+app = FastAPI()
 
 @app.get("/")
 def read_root():
@@ -13,7 +14,7 @@ def read_root():
 
 #@app.post('/body')
 #def read_body(res = Body(...)):  
-#    print(res)
+#   print(res)
 #   return {"message": f"Essa é a response: {res}"}
 
 @app.post('/create')

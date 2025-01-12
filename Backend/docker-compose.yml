@@ -1,35 +1,32 @@
-version: '3.8'
+version: '3.9'
 
 services:
-  db:
-    image: postgres:14
+  postgres:
+    image: postgres:15
+    container_name: postgres_container
     environment:
       POSTGRES_USER: admin
-      POSTGRES_PASSWORD: adminpassword
+      POSTGRES_PASSWORD: ""    
       POSTGRES_DB: mydatabase
-    volumes:
-      - postgres_data:/var/lib/postgresql/data  # Persistência de dados
-    networks:
-      - mynetwork
+      POSTGRES_HOST_AUTH_METHOD: trust  
     ports:
-      - "5432:5432"  # Expondo a porta do PostgreSQL
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
   pgadmin:
-    image: dpage/pgadmin4:latest
+    image: dpage/pgadmin4:7
+    container_name: pgadmin_container
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: adminpassword
+      PGADMIN_DEFAULT_PASSWORD: admin
     ports:
-      - "8080:80"  
-    networks:
-      - mynetwork
+      - "8080:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
     depends_on:
-      - db  
-
-networks:
-  mynetwork:
-    driver: bridge
-
+      - postgres
+  
 volumes:
   postgres_data:
-    driver: local
+  pgadmin_data:
