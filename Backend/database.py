@@ -13,6 +13,8 @@ database_host = os.getenv("DATABASE_HOST")
 print(f"postgresql://{database_user}:{database_password}@{database_host}/{database_name}")
 
 SQLALCHEMY_DATABASE_URL = f"postgresql://{database_user}:{database_password}@{database_host}/{database_name}"
+
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
+
 SessionLocal = sessionmaker( autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
