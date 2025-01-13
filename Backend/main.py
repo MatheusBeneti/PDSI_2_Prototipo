@@ -1,8 +1,8 @@
-from fastapi import FastAPI
-#from fastapi.params import Body
+from fastapi import FastAPI, status, Depends
 from classes import Mensagem
 import model
-from database import engine
+from database import engine, get_db
+from sqlalchemy.orm import Session
 
 model.Base.metadata.create_all(bind=engine)
 
@@ -12,14 +12,15 @@ app = FastAPI()
 def read_root():
     return {"message": "Bem-vindo ao FastAPI!"}
 
-#@app.post('/body')
-#def read_body(res = Body(...)):  
-#   print(res)
-#   return {"message": f"Essa é a response: {res}"}
 
-@app.post('/create')
-def create_table(res: Mensagem):  
-    print(res)
-    return {"message": f"Essa é a response: {res}"}
+@app.post('/create', status_code=status.HTTP_201_CREATED)
+def create_table(res: Mensagem, db: Session = Depends(get_db)):  
+    created_message = model.Model_Mensagem(res.model_dump())
+    db.add(created_message)
+    db.commit()
+    db.refresh(created_message)
+    return {"message": created_message}
+
+
     
 
