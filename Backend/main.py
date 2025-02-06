@@ -8,7 +8,7 @@ model.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-@app.get("/")
+@app.get("/", status_code=status.HTTP_201_CREATED)
 def read_root():
     return {"message": "Bem-vindo ao FastAPI!"}
 

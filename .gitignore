@@ -11,3 +11,7 @@ Backend/venv
 # Excluir arquivos de variáveis de ambiente
 .env
 venv
+__pycache__
+venv/
+.pytest_cache
+
