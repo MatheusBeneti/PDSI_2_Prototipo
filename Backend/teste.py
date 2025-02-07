@@ -5,7 +5,7 @@ client = TestClient(app)
 def teste_hello():
     response = client.get("/")
     assert response.status_code == 201
-    assert response.json() == {"message": "Bem-vindo ao FastAPI!"}
+    assert response.json() == {"message": "Bem-vindo ao FastAPI!!!"}
     
 def teste_quadrado():
     num = 4
