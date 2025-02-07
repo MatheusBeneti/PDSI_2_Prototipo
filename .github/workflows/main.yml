@@ -1,7 +1,8 @@
 name: Build and Deploy
 on:
-  - push
-  - pull_request
+  push:
+  pull_request
+
 jobs:
   job1:
     runs-on: ubuntu-latest
@@ -15,6 +16,11 @@ jobs:
           POSTGRES_DB: nome_database
         ports:
           - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -h localhost" 
+          --health-interval 10s 
+          --health-timeout 5s 
+          --health-retries 5
 
     steps:
       - name: pulling git repo
@@ -31,8 +37,16 @@ jobs:
       - name: instalar dependencias
         run: pip install -r Backend/requirements.txt
 
-      - name: Esperando o PostgreSQL ficar pronto
-        run: sleep 15
+      - name: Wait for PostgreSQL
+        run: |
+          for i in {1..10}; do
+            pg_isready -h localhost -p 5432 && break
+            echo "Waiting for PostgreSQL..."
+            sleep 5
+          done
+
+      - name: Check PostgreSQL status
+        run: pg_isready -h localhost -p 5432
 
       - name: Executar pytest
         env:
