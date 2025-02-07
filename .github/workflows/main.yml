@@ -26,29 +26,27 @@ jobs:
       - name: pulling git repo
         uses: actions/checkout@v2
 
-      - name: instalando o python
+      - name: Instalando o Python
         uses: actions/setup-python@v2
         with:
           python-version: "3.12.4"
 
-      - name: update pip
+      - name: Atualizar pip
         run: python -m pip install --upgrade pip
 
-      - name: instalar dependencias
+      - name: Instalar dependências
         run: pip install -r Backend/requirements.txt
 
-      - name: Wait for PostgreSQL
+      - name: Aguardar PostgreSQL
         run: |
-          for i in {1..10}; do
-            pg_isready -h localhost -p 5432 && break
-            echo "Waiting for PostgreSQL..."
+          for i in {1..15}; do
+            pg_isready -h postgres -p 5432 && echo "PostgreSQL está pronto!" && break
+            echo "Esperando pelo PostgreSQL..."
             sleep 5
           done
-
-      - name: Check PostgreSQL status
-        run: pg_isready -h localhost -p 5432
+          pg_isready -h postgres -p 5432
 
       - name: Executar pytest
         env:
-          DATABASE_URL: postgresql://postgres:admin@localhost:5432/nome_database
+          DATABASE_URL: postgresql://postgres:admin@postgres:5432/nome_database
         run: pytest Backend/teste.py
