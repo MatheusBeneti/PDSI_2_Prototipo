@@ -52,4 +52,4 @@ jobs:
       - name: Run pytest
         env:
           DATABASE_URL: postgresql://postgres:admin@localhost:5432/nome_database
-        run: pytest PDSI_2_Prototipo/Backend/teste.py
+        run: pytest Backend/teste.py
