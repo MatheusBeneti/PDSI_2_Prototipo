@@ -12,13 +12,13 @@ jobs:
       postgres:
         image: postgres:13
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: admin
-          POSTGRES_DB: nome_database
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: mydatabase
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U postgres -h localhost" 
+          --health-cmd "pg_isready -U user -h localhost" 
           --health-interval 10s 
           --health-timeout 5s 
           --health-retries 5
@@ -41,15 +41,25 @@ jobs:
       - name: Wait for PostgreSQL
         run: |
           for i in {1..20}; do
-            PGPASSWORD=admin psql -h localhost -U postgres -d nome_database -c "SELECT 1" && echo "PostgreSQL está pronto!" && break
+            PGPASSWORD=password psql -h localhost -U user -d mydatabase -c "SELECT 1" && echo "PostgreSQL está pronto!" && break
             echo "Esperando pelo PostgreSQL..."
             sleep 5
           done
 
       - name: Check PostgreSQL status
-        run: PGPASSWORD=admin psql -h localhost -U postgres -d nome_database -c "SELECT 1"
+        run: PGPASSWORD=password psql -h localhost -U user -d mydatabase -c "SELECT 1"
+
+      - name: Create .env file in Backend
+        run: |
+          echo "DATABASE_USER=user" >> Backend/.env
+          echo "DATABASE_PASSWORD=password" >> Backend/.env
+          echo "DATABASE_NAME=mydatabase" >> Backend/.env
+          echo "DATABASE_HOST=localhost" >> Backend/.env
 
       - name: Run pytest
         env:
-          DATABASE_URL: postgresql://postgres:admin@localhost:5432/nome_database
+          DATABASE_USER: user
+          DATABASE_PASSWORD: password
+          DATABASE_NAME: mydatabase
+          DATABASE_HOST: localhost
         run: pytest Backend/teste.py
