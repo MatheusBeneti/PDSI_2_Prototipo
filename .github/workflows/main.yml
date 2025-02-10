@@ -12,9 +12,9 @@ jobs:
       postgres:
         image: postgres:13
         env:
-          POSTGRES_USER: user
-          POSTGRES_PASSWORD: password
-          POSTGRES_DB: mydatabase
+          POSTGRES_USER: ${{ secrets.DATABASE_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.DATABASE_NAME }}
         ports:
           - 5432:5432
         options: >-
@@ -51,9 +51,9 @@ jobs:
 
       - name: Create .env file in Backend
         run: |
-          echo "DATABASE_USER=user" >> Backend/.env
-          echo "DATABASE_PASSWORD=password" >> Backend/.env
-          echo "DATABASE_NAME=mydatabase" >> Backend/.env
+          echo "DATABASE_USER=${{ secrets.DATABASE_USER }}" >> Backend/.env
+          echo "DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}" >> Backend/.env
+          echo "DATABASE_NAME=${{ secrets.DATABASE_NAME }}" >> Backend/.env
           echo "DATABASE_HOST=localhost" >> Backend/.env
 
       - name: Run pytest
