@@ -57,9 +57,4 @@ jobs:
           echo "DATABASE_HOST=localhost" >> Backend/.env
 
       - name: Run pytest
-        env:
-          DATABASE_USER: user
-          DATABASE_PASSWORD: password
-          DATABASE_NAME: mydatabase
-          DATABASE_HOST: localhost
         run: pytest Backend/teste.py
