@@ -3,10 +3,19 @@ from classes import Mensagem
 import model
 from database import engine, get_db
 from sqlalchemy.orm import Session
+from fastapi.middleware.cors import CORSMiddleware
 
 model.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*'],
+    allow_credentials=True,
+    allow_methods=['*'],
+    allow_headers=['*']
+)
 
 @app.get("/", status_code=status.HTTP_201_CREATED)
 def read_root():
