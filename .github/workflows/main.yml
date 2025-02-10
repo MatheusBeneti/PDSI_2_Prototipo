@@ -7,6 +7,7 @@ on:
 jobs:
   job1:
     runs-on: ubuntu-latest
+    environment: db
 
     services:
       postgres:
@@ -51,9 +52,9 @@ jobs:
 
       - name: Create .env file in Backend
         run: |
-          echo "DATABASE_USER=${{ secrets.DATABASE_USER }}" >> Backend/.env
-          echo "DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }}" >> Backend/.env
-          echo "DATABASE_NAME=${{ secrets.DATABASE_NAME }}" >> Backend/.env
+          echo "DATABASE_USER=${{ vars.DATABASE_USER }}" >> Backend/.env
+          echo "DATABASE_PASSWORD=${{ vars.DATABASE_PASSWORD }}" >> Backend/.env
+          echo "DATABASE_NAME=${{ vars.DATABASE_NAME }}" >> Backend/.env
           echo "DATABASE_HOST=localhost" >> Backend/.env
 
       - name: Run pytest
