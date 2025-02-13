@@ -1,4 +1,6 @@
 from fastapi import FastAPI, status, Depends
+from typing import List
+import classes
 from classes import Mensagem
 import model
 from database import engine, get_db
@@ -24,12 +26,16 @@ def read_root():
 
 @app.post('/create', status_code=status.HTTP_201_CREATED)
 def create_table(res: Mensagem, db: Session = Depends(get_db)):  
-    created_message = model.Model_Mensagem(res.model_dump())
+    created_message = model.Model_Mensagem(**res.dict())
     db.add(created_message)
     db.commit()
     db.refresh(created_message)
-    return {"message": created_message}
+    return {"message": created_message.__dict__}
 
 
-    
+@app.get("/mensagens", response_model=List[classes.Mensagem], status_code=status.HTTP_200_OK)
+async def buscar_valores(db: Session = Depends(get_db), skip: int = 0, limit: int=100):
+    mensagens = db.query(model.Model_Mensagem).offset(skip).limit(limit).all()
+    return mensagens
+
 
