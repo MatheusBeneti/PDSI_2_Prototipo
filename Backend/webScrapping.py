@@ -1,0 +1,2 @@
+def execScrapping():
+    print("legal")

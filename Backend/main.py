@@ -6,6 +6,7 @@ import model
 from database import engine, get_db
 from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
+import webScrapping
 
 model.Base.metadata.create_all(bind=engine)
 
@@ -37,5 +38,9 @@ def create_table(res: Mensagem, db: Session = Depends(get_db)):
 async def buscar_valores(db: Session = Depends(get_db), skip: int = 0, limit: int=100):
     mensagens = db.query(model.Model_Mensagem).offset(skip).limit(limit).all()
     return mensagens
+
+@app.get("scrapping")
+def scrapping():
+    return webScrapping.execScrapping
 
 
