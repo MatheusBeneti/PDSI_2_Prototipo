@@ -39,8 +39,8 @@ async def buscar_valores(db: Session = Depends(get_db), skip: int = 0, limit: in
     mensagens = db.query(model.Model_Mensagem).offset(skip).limit(limit).all()
     return mensagens
 
-@app.get("scrapping")
+@app.get("/scrapping")
 def scrapping():
-    return webScrapping.execScrapping
+    webScrapping.exec()
 
 
