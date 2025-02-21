@@ -24,7 +24,6 @@ app.add_middleware(
 def read_root():
     return {"message": "Bem-vindo ao FastAPI!"}
 
-
 @app.post('/create', status_code=status.HTTP_201_CREATED)
 def create_table(res: Mensagem, db: Session = Depends(get_db)):  
     created_message = model.Model_Mensagem(**res.dict())
