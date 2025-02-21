@@ -7,9 +7,3 @@ deactivate
 https://dontpad.com/2024_2_PDSI2
 pip install -r requirements.txt
 
-1. Conectar com o banco usando .env
-
-Host: postgres
-Port: 5432
-Username: user
-Password: password
